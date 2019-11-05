@@ -1,68 +1,69 @@
 package com.ssm.promotion.core.entity;
 
-import java.util.Date;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class Buser {
     /**
-    * 用户ID
-    */
+     * 用户ID
+     */
     private Integer id;
 
     /**
-    * 用户昵称
-    */
+     * 用户昵称
+     */
     private String userName;
 
     /**
-    * 用户手机号
-    */
+     * 用户手机号
+     */
     private String userPhone;
 
     /**
-    * 用户密码
-    */
+     * 用户密码
+     */
     private String userPwd;
 
     /**
-    * 用户图像
-    */
+     * 用户图像
+     */
     private String userPic;
 
     /**
-    * 音视频TOKEN
-    */
+     * 音视频TOKEN
+     */
     private String phoneToken;
 
     /**
-    * 乐观锁
-    */
+     * 乐观锁
+     */
     private Integer revision;
 
     /**
-    * 创建人
-    */
+     * 创建人
+     */
     private String createdBy;
 
     /**
-    * 创建时间
-    */
+     * 创建时间
+     */
     private Date createdTime;
 
     /**
-    * 更新人
-    */
+     * 更新人
+     */
     private String updatedBy;
 
     /**
-    * 更新时间
-    */
+     * 更新时间
+     */
     private Date updatedTime;
 
     /**
-    * 用户地址
-    */
+     * 用户地址
+     */
     private String userAddress;
 
     public Integer getId() {
