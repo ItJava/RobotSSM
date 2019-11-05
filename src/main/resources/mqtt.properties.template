@@ -1,0 +1,13 @@
+#host=tcp://47.244.28.93
+#port=1883
+#wx2mqtt_userName=server
+#wx2mqtt_clientId=server
+#wx2mqtt_passWord=server
+
+host=tcp://47.244.136.240
+port=6379
+wx2mqtt_userName=server
+wx2mqtt_clientId=server
+wx2mqtt_passWord=server
+
+

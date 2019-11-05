@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 自动扫描 -->
+    <context:component-scan base-package="com.ssm.promotion.core.dao"/>
+    <context:component-scan base-package="com.ssm.promotion.core.service.impl"/>
+    <context:component-scan base-package="com.ssm.promotion.core.service.impl"/>
+<!--    <context:component-scan base-package="com.ssm.promotion.core.service.*"/>
+    <context:component-scan base-package="com.ssm.promotion.core.service.*.*"/>-->
+    <context:component-scan base-package="com.ssm.promotion.core.redis"/>
+
+    <!-- druid监控配置 -->
+    <import resource="classpath:spring-context-druid-stat.xml"/>
+    <!-- 事务管理配置 -->
+    <import resource="classpath:spring-context-tx.xml"/>
+
+
+
+    <!-- 加载配置文件 -->
+    <context:property-placeholder location="classpath:config.properties"/>
+    <util:properties id="mqttProperties" location="classpath:/mqtt.properties.template"/>
+    <util:properties id="imProperties" location="classpath:/im.properties.template"/>
+    <!-- 扫描service自动注入为bean -->
+    <context:component-scan base-package="com.iot.mqtt.config com.ssm.promotion.core.config"/>
+
+
+
+</beans>
