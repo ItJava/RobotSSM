@@ -24,10 +24,8 @@ public class IMCommunicationServiceImpl implements IMCommunicationService {
     @Resource
     private OkHttpClient okHttpClient;
 
-
     @Override
     public String createImAccount(String userId, String mobile) {
-
         String time = DateUtil.getNowUrlTime();
         String url = imConfig.getIM_BASE_URL() + "2015-06-30/Accounts/" + imConfig.getACCOUNT_SID() + "/Clients?sig=" + getSig(time);
         JSONObject jsonObject1 = new JSONObject();

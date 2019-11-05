@@ -10,6 +10,7 @@ import com.ssm.promotion.core.service.BuserService;
 import com.ssm.promotion.core.service.IMCommunicationService;
 import com.ssm.promotion.core.service.MqttUserService;
 import com.ssm.promotion.core.util.MD5Util;
+import com.ssm.promotion.core.util.PhotoUtil;
 import com.ssm.promotion.core.util.StringUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -24,7 +26,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/busers")
-public class BUserController {
+public class BUserController extends BaseController {
 
     private static final Logger log = Logger.getLogger(BUserController.class);// 日志文件
 
@@ -67,11 +69,12 @@ public class BUserController {
         buser.setUserAddress(bAddress);
         buser.setRevision(0);
         buser.setUserName(buserName);
-        buser.setUserPwd(bPwd);
+        buser.setUserPwd(MD5Util.getMD5Str(bPwd + Constants.ENCODE_EXTRA_PARAMER_ADDED));
         buser.setPhoneToken(phoneToken);
         buser.setUserPhone(bPhone);
         buser.setCreatedTime(new Date());
         buser.setCreatedBy(bPhone);
+        buser.setUserPic("");
         int bUserResultFlag = buserService.insert(buser);
         String userResultJson = new Gson().toJson(buser);
         if (bUserResultFlag == 0) return ResultGenerator.genFailResult("插入BUser失败！插入数据：" + userResultJson);
@@ -85,6 +88,80 @@ public class BUserController {
         if (mqttResultFlag == 0) return ResultGenerator.genFailResult("MqttUser失败！插入数据：" + new Gson().toJson(mqttUser));
         return ResultGenerator.genSuccessResult(userResultJson);
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/addUserSaveFile", method = RequestMethod.POST)
+    public Result addUserSaveFile(@RequestParam("userName") String buserName,
+                                  @RequestParam("pwd") String bPwd,
+                                  @RequestParam("bUserPhone") String bPhone,
+                                  @RequestParam("bUserAddress") String bAddress,
+                                  @RequestParam("pic") MultipartFile file) {
+
+        System.out.println("/busers/addUserNoPic  参数：buserName：" + buserName + " pwd：" + bPwd + " bUserPhone：" + bPhone + " bUserAddress：" + bAddress);
+        if (StringUtil.isEmpty(buserName) ||
+                StringUtil.isEmpty(bPhone) ||
+                StringUtil.isEmpty(bAddress) ||
+                StringUtil.isEmpty(bPwd))
+            return ResultGenerator.genParamerFailResult("参数：buserName：" + buserName + " pwd：" + bPwd + " bUserPhone：" + bPhone + " bUserAddress：" + bAddress);
+        Buser resultUser = buserService.selectBuserByPhone(bPhone);
+        if (resultUser != null) return ResultGenerator.genFailResult("用户已经注册！");
+     /*
+       零时屏蔽
+       String pushTokenStr = wxImService.createImAccount(bPhone, bPhone);
+        ImCreateResponse imCreateResponse = new Gson().fromJson(pushTokenStr, ImCreateResponse.class);//wxImService.createImAccount(phone, phone);
+        if (imCreateResponse == null) {
+            AddUserData addUserData = new AddUserData();
+            addUserData.setMessage(pushTokenStr);
+            return ResultGenerator.genFailResult("第三方license生成有误,请联系后台查错！");
+        }*/
+
+        String photoUrl = PhotoUtil.saveFile(file, bPhone, request);
+
+        String phoneToken = "test_phoneToken";  //模拟第三方token
+        Buser buser = new Buser();
+        buser.setUserAddress(bAddress);
+        buser.setRevision(0);
+        buser.setUserName(buserName);
+        buser.setUserPwd(MD5Util.getMD5Str(bPwd + Constants.ENCODE_EXTRA_PARAMER_ADDED));
+        buser.setPhoneToken(phoneToken);
+        buser.setUserPhone(bPhone);
+        buser.setCreatedTime(new Date());
+        buser.setCreatedBy(bPhone);
+        buser.setUserPic(photoUrl);
+        int bUserResultFlag = buserService.insert(buser);
+        String userResultJson = new Gson().toJson(buser);
+        if (bUserResultFlag == 0) return ResultGenerator.genFailResult("插入BUser失败！插入数据：" + userResultJson);
+
+        MqttUser mqttUser = new MqttUser();
+        //mqttUser.setIsSuperuser(false);
+        mqttUser.setCreatetime(new Date());
+        mqttUser.setUsername(MD5Util.getMD5Str(bPhone + Constants.ENCODE_EXTRA_PARAMER_ADDED));
+        mqttUser.setPassword(MD5Util.getMD5Str(bPwd + Constants.ENCODE_EXTRA_PARAMER_ADDED));
+        int mqttResultFlag = mqttUserService.insert(mqttUser);
+        if (mqttResultFlag == 0) return ResultGenerator.genFailResult("MqttUser失败！插入数据：" + new Gson().toJson(mqttUser));
+        return ResultGenerator.genSuccessResult(userResultJson);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Result login(@RequestParam("phone") String phone, @RequestParam("pwd") String pwd) {
+        Buser buser = buserService.selectBuserByPhone(phone);
+        if (buser != null) {
+            if (buser.getUserPwd().equals(MD5Util.getMD5Str(pwd + Constants.ENCODE_EXTRA_PARAMER_ADDED))) {
+                buser.setUserPwd("");
+                return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
+            } else {
+                return ResultGenerator.genFailResult("密码不对哦！");
+            }
+        } else {
+            return ResultGenerator.genFailResult("用户还未注册！");
+
+        }
+    }
+
+
 
 
 /*
