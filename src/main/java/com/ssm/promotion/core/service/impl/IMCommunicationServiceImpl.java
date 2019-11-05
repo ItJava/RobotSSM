@@ -51,10 +51,8 @@ public class IMCommunicationServiceImpl implements IMCommunicationService {
             response = call.execute();
             if (response.isSuccessful()) {
                 dataResult = response.body().string();
-//                System.out.println("成功了:" + dataResult);
                 return dataResult;
             } else {
-                //               System.out.println("失败了:" + response.body().string());
                 dataResult = "create im account failed!";
                 return dataResult;
             }
@@ -91,10 +89,8 @@ public class IMCommunicationServiceImpl implements IMCommunicationService {
             response = call.execute();
             if (response.isSuccessful()) {
                 dataResult = response.body().string();
-//                System.out.println("成功了:" + dataResult);
                 return dataResult;
             } else {
-//                System.out.println("失败了:" + response.body().string());
                 dataResult = "drop im account failed!";
                 return dataResult;
             }
@@ -124,7 +120,6 @@ public class IMCommunicationServiceImpl implements IMCommunicationService {
                 //               System.out.println("成功了:" + dataResult);
                 return dataResult;
             } else {
-//                System.out.println("失败了:" + response.body().string());
                 dataResult = "queryClientByMobile im account failed!";
                 return dataResult;
             }
@@ -150,10 +145,8 @@ public class IMCommunicationServiceImpl implements IMCommunicationService {
             response = call.execute();
             if (response.isSuccessful()) {
                 dataResult = response.body().string();
-//                System.out.println("成功了:" + dataResult);
                 return dataResult;
             } else {
-//                System.out.println("失败了:" + response.body().string());
                 dataResult = "queryClientByUserid im account failed!";
                 return dataResult;
             }
