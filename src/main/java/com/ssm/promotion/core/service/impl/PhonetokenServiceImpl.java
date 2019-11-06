@@ -33,6 +33,11 @@ public class PhonetokenServiceImpl implements PhonetokenService {
         return phonetokenMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public Phonetoken selectByDeviceId(String deviceId) {
+        return phonetokenMapper.selectByDeviceId(deviceId);
+    }
+
 
     public int updateByPrimaryKeySelective(Phonetoken record) {
         return phonetokenMapper.updateByPrimaryKeySelective(record);

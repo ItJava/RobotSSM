@@ -134,4 +134,12 @@
       PHONE_TOKEN = #{phoneToken,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectByDeviceId" resultMap="BaseResultMap">
+      <!--@mbg.generated-->
+      select
+      <include refid="Base_Column_List" />
+      from phonetoken
+      where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+
+    </select>
 </mapper>

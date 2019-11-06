@@ -1,28 +1,34 @@
 package com.ssm.promotion.core.service;
 
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import com.ssm.promotion.core.entity.Devicebind;
-import com.ssm.promotion.core.dao.DevicebindMapper;
 
-public interface DevicebindService{
+import java.util.List;
+
+public interface DevicebindService {
 
 
+    int deleteByPrimaryKey(Integer id);
 
-    
-      int deleteByPrimaryKey(Integer id);
+    int deletBindDeviceByDeviceIdAndPhone(String phone, String deviceId);
 
-    
-      int insert(Devicebind record);
-    
-      int insertSelective(Devicebind record);
+    int deletBindDeviceAllByDeviceId( String deviceId);
 
-    
-      Devicebind selectByPrimaryKey(Integer id);
-    
-      int updateByPrimaryKeySelective(Devicebind record);
+    int deletBindDeviceAllByPhone(String phone);
 
-    
-      int updateByPrimaryKey(Devicebind record);
+    int insert(Devicebind record);
+
+    int insertSelective(Devicebind record);
+
+    Devicebind selectByPrimaryKey(Integer id);
+
+    List<Devicebind> selectByPhone(String phone);
+
+    List<Devicebind> selectByDeviceId(String deviceId);
+
+    Devicebind selectByPhoneAndDevice(String phone, String deviceId);
+
+    int updateByPrimaryKeySelective(Devicebind record);
+
+    int updateByPrimaryKey(Devicebind record);
 
 }

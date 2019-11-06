@@ -11,7 +11,12 @@ public interface PhonetokenMapper {
 
     Phonetoken selectByPrimaryKey(Integer id);
 
+    Phonetoken selectByDeviceId(String deviceId);
+
+
     int updateByPrimaryKeySelective(Phonetoken record);
 
     int updateByPrimaryKey(Phonetoken record);
+
+
 }

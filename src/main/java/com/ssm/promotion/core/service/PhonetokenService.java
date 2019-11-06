@@ -17,6 +17,8 @@ public interface PhonetokenService {
 
     Phonetoken selectByPrimaryKey(Integer id);
 
+    Phonetoken selectByDeviceId(String deviceId);
+
 
     int updateByPrimaryKeySelective(Phonetoken record);
 

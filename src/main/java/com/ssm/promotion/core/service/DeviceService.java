@@ -1,27 +1,18 @@
 package com.ssm.promotion.core.service;
 
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import com.ssm.promotion.core.dao.DeviceMapper;
 import com.ssm.promotion.core.entity.Device;
 
-public interface DeviceService{
+public interface DeviceService {
 
+    int deleteByPrimaryKey(String deviceId);
 
+    int insert(Device record);
 
+    int insertSelective(Device record);
 
-    public int deleteByPrimaryKey(String deviceId);
+    Device selectByPrimaryKey(String deviceId);
 
-    public int insert(Device record);
+    int updateByPrimaryKeySelective(Device record);
 
-
-    public int insertSelective(Device record);
-
-
-    public Device selectByPrimaryKey(String deviceId) ;
-
-
-    public int updateByPrimaryKeySelective(Device record) ;
-
-    public int updateByPrimaryKey(Device record) ;
+    int updateByPrimaryKey(Device record);
 }
