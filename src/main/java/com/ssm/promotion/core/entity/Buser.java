@@ -1,6 +1,8 @@
 package com.ssm.promotion.core.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -146,6 +148,8 @@ public class Buser {
         this.updatedBy = updatedBy;
     }
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getUpdatedTime() {
         return updatedTime;
     }

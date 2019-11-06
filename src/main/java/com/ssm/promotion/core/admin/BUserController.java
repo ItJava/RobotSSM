@@ -75,6 +75,8 @@ public class BUserController extends BaseController {
         buser.setCreatedTime(new Date());
         buser.setCreatedBy(bPhone);
         buser.setUserPic("");
+        buser.setUpdatedBy(buserName);
+        buser.setCreatedTime(new Date());
         int bUserResultFlag = buserService.insert(buser);
         String userResultJson = new Gson().toJson(buser);
         if (bUserResultFlag == 0) return ResultGenerator.genFailResult("插入BUser失败！插入数据：" + userResultJson);
@@ -130,6 +132,8 @@ public class BUserController extends BaseController {
         buser.setCreatedTime(new Date());
         buser.setCreatedBy(bPhone);
         buser.setUserPic(photoUrl);
+        buser.setUpdatedBy(buserName);
+        buser.setCreatedTime(new Date());
         int bUserResultFlag = buserService.insert(buser);
         String userResultJson = new Gson().toJson(buser);
         if (bUserResultFlag == 0) return ResultGenerator.genFailResult("插入BUser失败！插入数据：" + userResultJson);
@@ -159,7 +163,6 @@ public class BUserController extends BaseController {
             }
         } else {
             return ResultGenerator.genFailResult("用户还未注册！");
-
         }
     }
 
@@ -169,7 +172,6 @@ public class BUserController extends BaseController {
     public Result findPwdByPhone(@RequestParam("phone") String phone) {
         if (StringUtil.isEmpty(phone)) return ResultGenerator.genParamerFailResult("登录参数有误");
         Buser buser = buserService.selectBuserByPhone(phone);
-
         if (buser == null) return ResultGenerator.genFailResult("请检测手机号是否正确,该手机号未注册！");
         else
             buser.setUserPwd(EncryptionUtil.decrypt(buser.getUserPwd()));
@@ -182,139 +184,69 @@ public class BUserController extends BaseController {
     public Result upDatePwd(@RequestParam("phone") String phone, @RequestParam("pwd") String pwd) {
         if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(pwd)) return ResultGenerator.genParamerFailResult("登录参数有误");
         Buser buser = buserService.selectBuserByPhone(phone);
-        buser.setUserPwd(EncryptionUtil.encryption(pwd));
+
+        if (buser == null) return ResultGenerator.genFailResult("请检测手机号是否正确,该手机号未注册！");
+        else
+            buser.setUserPwd(EncryptionUtil.encryption(pwd));
         buserService.updateByPrimaryKeySelective(buser);
         return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
 
-    /*    User userByUserName = userService.getByUserPhone(phone);
-        if (userByUserName == null) {
-            AddUserData addUserData = new AddUserData();
-            return getClientMessage(addUserData, ResultCode.ERROR, ResultRemindMsg.ACCOUNT_NO_EXITS);
-        }
-
-        userService.updateUser(phone, pwd);
-        User user = userService.getByUserPhone(phone);
-        mqttUserService.updateMqttUser(phone, pwd);
-        return getClientMessage(user, ResultCode.SUCCESS, "Success");*/
-
     }
 
 
-
-
-
-
-
-
-
-    /*
-     @ResponseBody
-    @RequestMapping("/findPwdByPhone")
-    public String findPwdByPhone(@RequestParam("phone") String userName) {
-        User userByUserName = userService.getByUserName(userName);
-        return getClientMessage(userByUserName, ResultCode.SUCCESS, "Success");
-    }
-     */
-
-
-/*
-
-userAddress
-userPwd
-userName
-userPhone
-phoneToken
-
- */
-
-
-
-
-/*    //登录
-    @RequestMapping(value = "/cookie", method = RequestMethod.POST)
     @ResponseBody
-    public Result login(User user) {
-        try {
-            String MD5pwd = MD5Util.MD5Encode(user.getPassword(), "UTF-8");
-            user.setPassword(MD5pwd);
-        } catch (Exception e) {
-            user.setPassword("");
-        }
-        User resultUser = userService.login(user);
-        log.info("request: user/login , user: " + user.toString());
-        if (resultUser == null) {
-            return ResultGenerator.genFailResult("请认真核对账号、密码！");
-        } else {
-            resultUser.setPassword("PASSWORD");
-            Map data = new HashMap();
-            data.put("currentUser", resultUser);
-            System.out.println("得到数据："+ResultGenerator.genSuccessResult(data));
-            return ResultGenerator.genSuccessResult(data);
-        }
+    @RequestMapping(value = "/updateUserName", method = RequestMethod.POST)
+    public Result upDateUserName(@RequestParam("phone") String phone, @RequestParam("userName") String buserName) {
+        if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(buserName))
+            return ResultGenerator.genParamerFailResult("登录参数有误");
+        Buser buser = buserService.selectBuserByPhone(phone);
+        if (buser == null) return ResultGenerator.genFailResult("请检测手机号是否正确,该手机号未注册！");
+        else
+            buser.setUserName(buserName);
+        buserService.updateByPrimaryKeySelective(buser);
+        return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
     }
 
 
-
-    @RequestMapping(value = "/datagrid", method = RequestMethod.POST)
-    public String list(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "rows", required = false) String rows, User s_user, HttpServletResponse response) throws Exception {
-        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("userName", StringUtil.formatLike(s_user.getUserName()));
-        map.put("start", pageBean.getStart());
-        map.put("size", pageBean.getPageSize());
-        List<User> userList = userService.findUser(map);
-        Long total = userService.getTotalUser(map);
-        JSONObject result = new JSONObject();
-        JSONArray jsonArray = JSONArray.fromObject(userList);
-        result.put("rows", jsonArray);
-        result.put("total", total);
-        log.info("request: user/list , map: " + map.toString());
-        ResponseUtil.write(response, result);
-        return null;
-    }
-
-   //添加或修改管理员
-    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public Result save(@RequestBody User user) throws Exception {
-        int resultTotal = 0;
-        String MD5pwd = MD5Util.MD5Encode(user.getPassword(), "UTF-8");
-        user.setPassword(MD5pwd);
-        resultTotal = userService.addUser(user);
-        if (resultTotal > 0) {
-            return ResultGenerator.genSuccessResult();
-        } else {
-            return ResultGenerator.genFailResult("FAIL");
-        }
+    @RequestMapping(value = "/updateToken", method = RequestMethod.POST)
+    public Result upDatePhoneToken(@RequestParam("phone") String phone, @RequestParam("phoneToken") String phoneToken) {
+        if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(phoneToken))
+            return ResultGenerator.genParamerFailResult("登录参数有误");
+        Buser buser = buserService.selectBuserByPhone(phone);
+        if (buser == null) return ResultGenerator.genFailResult("请检测手机号是否正确,该手机号未注册！");
+        else
+            buser.setPhoneToken(phoneToken);
+        buserService.updateByPrimaryKeySelective(buser);
+        return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
     }
 
-    //修改
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+
     @ResponseBody
-    public Result update(@RequestBody User user) throws Exception {
-        String MD5pwd = MD5Util.MD5Encode(user.getPassword(), "UTF-8");
-        user.setPassword(MD5pwd);
-        int resultTotal = userService.updateUser(user);
-        log.info("request: user/update , user: " + user.toString());
-        if (resultTotal > 0)return ResultGenerator.genSuccessResult();
-        else return ResultGenerator.genFailResult("FAIL");
-
-    }
-
-   //删除管理员
-    @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public Result delete(@PathVariable(value = "ids") String ids) throws Exception {
-        if (ids.length() > 20)return ResultGenerator.genFailResult("ERROR");
-        String[] idsStr = ids.split(",");
-        for (int i = 0; i < idsStr.length; i++) {
-            userService.deleteUser(Integer.valueOf(idsStr[i]));
+    @RequestMapping(value = "/updatePic", method = RequestMethod.POST)
+    public Result upDatePic(@RequestParam("phone") String phone, @RequestParam("pic") MultipartFile file) {
+        if (StringUtil.isEmpty(phone)) return ResultGenerator.genParamerFailResult("登录参数有误");
+        Buser buser = buserService.selectBuserByPhone(phone);
+        if (buser == null) return ResultGenerator.genFailResult("请检测手机号是否正确,该手机号未注册！");
+        else {
+            String photoUrl = PhotoUtil.saveFile(file, phone, request);
+            buser.setUserPhone(photoUrl);
         }
-        log.info("request: article/delete , ids: " + ids);
-        return ResultGenerator.genSuccessResult();
+        buserService.updateByPrimaryKeySelective(buser);
+        return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
     }
 
-    */
-
-
+    @ResponseBody
+    @RequestMapping(value = "/updateAddress", method = RequestMethod.POST)
+    public Result upDateAddress(@RequestParam("phone") String phone, @RequestParam("address") String address) {
+        if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(address))
+            return ResultGenerator.genParamerFailResult("登录参数有误");
+        Buser buser = buserService.selectBuserByPhone(phone);
+        if (buser == null) return ResultGenerator.genFailResult("请检测手机号是否正确,该手机号未注册！");
+        else
+            buser.setUserAddress(address);
+        buserService.updateByPrimaryKeySelective(buser);
+        return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
+    }
+    
 }
