@@ -1,7 +1,6 @@
 package com.ssm.promotion.core.admin;
 
 import com.google.gson.Gson;
-import com.ssm.promotion.core.common.Constants;
 import com.ssm.promotion.core.common.Result;
 import com.ssm.promotion.core.common.ResultGenerator;
 import com.ssm.promotion.core.entity.Buser;
@@ -9,7 +8,7 @@ import com.ssm.promotion.core.entity.MqttUser;
 import com.ssm.promotion.core.service.BuserService;
 import com.ssm.promotion.core.service.IMCommunicationService;
 import com.ssm.promotion.core.service.MqttUserService;
-import com.ssm.promotion.core.util.MD5Util;
+import com.ssm.promotion.core.util.EncryptionUtil;
 import com.ssm.promotion.core.util.PhotoUtil;
 import com.ssm.promotion.core.util.StringUtil;
 import org.apache.log4j.Logger;
@@ -40,7 +39,7 @@ public class BUserController extends BaseController {
     @Resource
     private IMCommunicationService wxImService;
 
-    //登录
+    //注册[不带图像]
     @RequestMapping(value = "/addUserNoPic", method = RequestMethod.POST)
     @ResponseBody
     public Result addUserNoPic(@RequestParam("userName") String buserName,
@@ -69,7 +68,8 @@ public class BUserController extends BaseController {
         buser.setUserAddress(bAddress);
         buser.setRevision(0);
         buser.setUserName(buserName);
-        buser.setUserPwd(MD5Util.getMD5Str(bPwd + Constants.ENCODE_EXTRA_PARAMER_ADDED));
+        //buser.setUserPwd(MD5Util.getMD5Str(bPwd + Constants.ENCODE_EXTRA_PARAMER_ADDED));
+        buser.setUserPwd(EncryptionUtil.encryption(bPwd));
         buser.setPhoneToken(phoneToken);
         buser.setUserPhone(bPhone);
         buser.setCreatedTime(new Date());
@@ -82,14 +82,15 @@ public class BUserController extends BaseController {
         MqttUser mqttUser = new MqttUser();
         //mqttUser.setIsSuperuser(false);
         mqttUser.setCreatetime(new Date());
-        mqttUser.setUsername(MD5Util.getMD5Str(bPhone + Constants.ENCODE_EXTRA_PARAMER_ADDED));
-        mqttUser.setPassword(MD5Util.getMD5Str(bPhone));
+        mqttUser.setUsername(EncryptionUtil.encryption(bPhone));
+        mqttUser.setPassword(EncryptionUtil.encryption(bPhone));
         int mqttResultFlag = mqttUserService.insert(mqttUser);
         if (mqttResultFlag == 0) return ResultGenerator.genFailResult("MqttUser失败！插入数据：" + new Gson().toJson(mqttUser));
         return ResultGenerator.genSuccessResult(userResultJson);
     }
 
 
+    //注册[带图像]
     @ResponseBody
     @RequestMapping(value = "/addUserSaveFile", method = RequestMethod.POST)
     public Result addUserSaveFile(@RequestParam("userName") String buserName,
@@ -123,7 +124,7 @@ public class BUserController extends BaseController {
         buser.setUserAddress(bAddress);
         buser.setRevision(0);
         buser.setUserName(buserName);
-        buser.setUserPwd(MD5Util.getMD5Str(bPwd + Constants.ENCODE_EXTRA_PARAMER_ADDED));
+        buser.setUserPwd(EncryptionUtil.encryption(bPwd));
         buser.setPhoneToken(phoneToken);
         buser.setUserPhone(bPhone);
         buser.setCreatedTime(new Date());
@@ -136,21 +137,22 @@ public class BUserController extends BaseController {
         MqttUser mqttUser = new MqttUser();
         //mqttUser.setIsSuperuser(false);
         mqttUser.setCreatetime(new Date());
-        mqttUser.setUsername(MD5Util.getMD5Str(bPhone + Constants.ENCODE_EXTRA_PARAMER_ADDED));
-        mqttUser.setPassword(MD5Util.getMD5Str(bPwd + Constants.ENCODE_EXTRA_PARAMER_ADDED));
+        mqttUser.setUsername(EncryptionUtil.encryption(bPhone));
+        mqttUser.setPassword(EncryptionUtil.encryption(bPwd));
         int mqttResultFlag = mqttUserService.insert(mqttUser);
         if (mqttResultFlag == 0) return ResultGenerator.genFailResult("MqttUser失败！插入数据：" + new Gson().toJson(mqttUser));
         return ResultGenerator.genSuccessResult(userResultJson);
     }
 
 
+    //登录
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result login(@RequestParam("phone") String phone, @RequestParam("pwd") String pwd) {
+        if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(pwd)) return ResultGenerator.genParamerFailResult("登录参数有误");
         Buser buser = buserService.selectBuserByPhone(phone);
         if (buser != null) {
-            if (buser.getUserPwd().equals(MD5Util.getMD5Str(pwd + Constants.ENCODE_EXTRA_PARAMER_ADDED))) {
-                buser.setUserPwd("");
+            if (buser.getUserPwd().equals(EncryptionUtil.encryption(pwd))) {
                 return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
             } else {
                 return ResultGenerator.genFailResult("密码不对哦！");
@@ -161,7 +163,58 @@ public class BUserController extends BaseController {
         }
     }
 
+    //找回密码
+    @ResponseBody
+    @RequestMapping(value = "/findPwdByPhone", method = RequestMethod.POST)
+    public Result findPwdByPhone(@RequestParam("phone") String phone) {
+        if (StringUtil.isEmpty(phone)) return ResultGenerator.genParamerFailResult("登录参数有误");
+        Buser buser = buserService.selectBuserByPhone(phone);
 
+        if (buser == null) return ResultGenerator.genFailResult("请检测手机号是否正确,该手机号未注册！");
+        else
+            buser.setUserPwd(EncryptionUtil.decrypt(buser.getUserPwd()));
+        return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
+    public Result upDatePwd(@RequestParam("phone") String phone, @RequestParam("pwd") String pwd) {
+        if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(pwd)) return ResultGenerator.genParamerFailResult("登录参数有误");
+        Buser buser = buserService.selectBuserByPhone(phone);
+        buser.setUserPwd(EncryptionUtil.encryption(pwd));
+        buserService.updateByPrimaryKeySelective(buser);
+        return ResultGenerator.genSuccessResult(new Gson().toJson(buser));
+
+    /*    User userByUserName = userService.getByUserPhone(phone);
+        if (userByUserName == null) {
+            AddUserData addUserData = new AddUserData();
+            return getClientMessage(addUserData, ResultCode.ERROR, ResultRemindMsg.ACCOUNT_NO_EXITS);
+        }
+
+        userService.updateUser(phone, pwd);
+        User user = userService.getByUserPhone(phone);
+        mqttUserService.updateMqttUser(phone, pwd);
+        return getClientMessage(user, ResultCode.SUCCESS, "Success");*/
+
+    }
+
+
+
+
+
+
+
+
+
+    /*
+     @ResponseBody
+    @RequestMapping("/findPwdByPhone")
+    public String findPwdByPhone(@RequestParam("phone") String userName) {
+        User userByUserName = userService.getByUserName(userName);
+        return getClientMessage(userByUserName, ResultCode.SUCCESS, "Success");
+    }
+     */
 
 
 /*
