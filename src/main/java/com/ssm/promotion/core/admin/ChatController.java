@@ -68,7 +68,7 @@ public class ChatController extends BaseController {
     }
 
 
-    @ResponseBody
+ /*   @ResponseBody
     @RequestMapping(value = "/addChatMsg", method = RequestMethod.POST)
     public Result addChatMsg(@RequestParam("deviceId") String deviceId, int start, int limit) {
         if (StringUtil.isEmpty(deviceId) ||
@@ -79,7 +79,7 @@ public class ChatController extends BaseController {
         
         return ResultGenerator.genSuccessResult(new Gson().toJson(chat));
 
-    }
+    }*/
 
 
 }
