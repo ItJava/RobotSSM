@@ -234,7 +234,7 @@ public class DeviceController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/unBindDeviceAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/unBindDeviceAllByDeviceId", method = RequestMethod.POST)
     public Result unBindDeviceAllByDeviceId(@RequestParam("deviceId") String deviceId) {
         if (StringUtil.isEmpty(deviceId))
             return ResultGenerator.genParamerFailResult("请求参数有误!");
@@ -248,7 +248,7 @@ public class DeviceController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/unBindDeviceAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/unBindDeviceAllByPhone", method = RequestMethod.POST)
     public Result unBindDeviceAllByPhone(@RequestParam("phone") String phone) {
         if (StringUtil.isEmpty(phone))
             return ResultGenerator.genParamerFailResult("请求参数有误!");
