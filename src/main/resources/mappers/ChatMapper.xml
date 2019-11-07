@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.promotion.core.dao.ChatMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.promotion.core.entity.Chat">
+    <!--@mbg.generated-->
+    <!--@Table chat-->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="DEVICE_ID" jdbcType="VARCHAR" property="deviceId" />
+    <result column="CHAT_TIME" jdbcType="TIMESTAMP" property="chatTime" />
+    <result column="CHAT_QUESTION" jdbcType="VARCHAR" property="chatQuestion" />
+    <result column="CHAT_ANSWER" jdbcType="VARCHAR" property="chatAnswer" />
+    <result column="CHAT_TYPE" jdbcType="VARCHAR" property="chatType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    ID, DEVICE_ID, CHAT_TIME, CHAT_QUESTION, CHAT_ANSWER, CHAT_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from chat
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from chat
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.ssm.promotion.core.entity.Chat" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into chat (DEVICE_ID, CHAT_TIME, CHAT_QUESTION, 
+      CHAT_ANSWER, CHAT_TYPE)
+    values (#{deviceId,jdbcType=VARCHAR}, #{chatTime,jdbcType=TIMESTAMP}, #{chatQuestion,jdbcType=VARCHAR}, 
+      #{chatAnswer,jdbcType=VARCHAR}, #{chatType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.ssm.promotion.core.entity.Chat" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into chat
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        DEVICE_ID,
+      </if>
+      <if test="chatTime != null">
+        CHAT_TIME,
+      </if>
+      <if test="chatQuestion != null">
+        CHAT_QUESTION,
+      </if>
+      <if test="chatAnswer != null">
+        CHAT_ANSWER,
+      </if>
+      <if test="chatType != null">
+        CHAT_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="chatTime != null">
+        #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chatQuestion != null">
+        #{chatQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="chatAnswer != null">
+        #{chatAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="chatType != null">
+        #{chatType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.promotion.core.entity.Chat">
+    <!--@mbg.generated-->
+    update chat
+    <set>
+      <if test="deviceId != null">
+        DEVICE_ID = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="chatTime != null">
+        CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chatQuestion != null">
+        CHAT_QUESTION = #{chatQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="chatAnswer != null">
+        CHAT_ANSWER = #{chatAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="chatType != null">
+        CHAT_TYPE = #{chatType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.promotion.core.entity.Chat">
+    <!--@mbg.generated-->
+    update chat
+    set DEVICE_ID = #{deviceId,jdbcType=VARCHAR},
+      CHAT_TIME = #{chatTime,jdbcType=TIMESTAMP},
+      CHAT_QUESTION = #{chatQuestion,jdbcType=VARCHAR},
+      CHAT_ANSWER = #{chatAnswer,jdbcType=VARCHAR},
+      CHAT_TYPE = #{chatType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

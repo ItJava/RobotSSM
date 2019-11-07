@@ -168,10 +168,6 @@ public class DeviceController extends BaseController {
         return ResultGenerator.genSuccessResult(new Gson().toJson(returnDeviceBean));
     }
 
-
-    //List<Devicebind> selectByPhone(String phone);
-
-
     @ResponseBody
     @RequestMapping(value = "/getDeviceBindByPhone", method = RequestMethod.POST)
     public Result getDeviceBindByPhone(@RequestParam("phone") String phone) {
