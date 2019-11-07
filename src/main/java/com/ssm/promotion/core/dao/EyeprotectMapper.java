@@ -11,5 +11,6 @@ public interface EyeprotectMapper {
 
     Eyeprotect selectByPrimaryKey(String deviceId);
 
+     int updateByPrimaryKey(Eyeprotect record);
 
 }

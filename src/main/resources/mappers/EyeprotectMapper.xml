@@ -151,4 +151,30 @@
 
   </select>
 
+  <update id="updateByPrimaryKey" parameterType="com.ssm.promotion.core.entity.Eyeprotect">
+
+    <!--@mbg.generated-->
+    update ssm_a50_db.eyeprotect
+    set
+       ROBOT_ID=  #{robotId,jdbcType=VARCHAR},
+       REVISION = #{revision,jdbcType=INTEGER},
+       CREATED_BY =  #{createdBy,jdbcType=VARCHAR},
+       CREATED_TIME  = #{createdTime,jdbcType=TIMESTAMP},
+       UPDATED_BY   = #{updatedBy,jdbcType=VARCHAR},
+       UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+       EYE_TIP  = #{eyeTip,jdbcType=INTEGER},
+       TIME_BEGIN =#{timeBegin,jdbcType=INTEGER},
+       TIME_END =#{timeEnd,jdbcType=INTEGER},
+       TIME_LENGTH= #{timeLength,jdbcType=INTEGER},
+       TIME_LIMIT= #{workTimeLimit,jdbcType=INTEGER},
+       WORK_TIME_BEGIN = #{workTimeBegin,jdbcType=INTEGER},
+       WORK_TIME_ENG= #{workTimeEng,jdbcType=INTEGER},
+       WORK_TIME_LENGTH=#{workTimeLength,jdbcType=INTEGER},
+       WORK_TIME_LIMIT = #{workTimeLimit,jdbcType=INTEGER}
+    where ROBOT_ID = #{robotId,jdbcType=VARCHAR}
+  </update>
+
+
+
+
 </mapper>

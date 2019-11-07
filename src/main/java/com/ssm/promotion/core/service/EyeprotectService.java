@@ -9,6 +9,8 @@ public interface EyeprotectService {
 
     Eyeprotect selectByPrimaryKey(String deviceId);
 
+    int upDateEyeprotectAlarm(Eyeprotect record);
+
 
 }
 

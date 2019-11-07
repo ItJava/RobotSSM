@@ -29,5 +29,10 @@ public class EyeprotectServiceImpl implements EyeprotectService {
         return eyeprotectMapper.selectByPrimaryKey(deviceId);
     }
 
+    @Override
+    public int upDateEyeprotectAlarm(Eyeprotect record) {
+        return eyeprotectMapper.updateByPrimaryKey(record);
+    }
+
 }
 
