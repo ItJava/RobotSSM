@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.promotion.core.dao.EyeprotectMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.promotion.core.entity.Eyeprotect">
+    <!--@mbg.generated-->
+    <!--@Table ssm_a50_db.eyeprotect-->
+    <result column="ROBOT_ID" jdbcType="VARCHAR" property="robotId" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="EYE_TIP" jdbcType="INTEGER" property="eyeTip" />
+    <result column="TIME_BEGIN" jdbcType="INTEGER" property="timeBegin" />
+    <result column="TIME_END" jdbcType="INTEGER" property="timeEnd" />
+    <result column="TIME_LENGTH" jdbcType="INTEGER" property="timeLength" />
+    <result column="TIME_LIMIT" jdbcType="INTEGER" property="timeLimit" />
+    <result column="WORK_TIME_BEGIN" jdbcType="INTEGER" property="workTimeBegin" />
+    <result column="WORK_TIME_ENG" jdbcType="INTEGER" property="workTimeEng" />
+    <result column="WORK_TIME_LENGTH" jdbcType="INTEGER" property="workTimeLength" />
+    <result column="WORK_TIME_LIMIT" jdbcType="INTEGER" property="workTimeLimit" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    ROBOT_ID, REVISION, CREATED_BY, CREATED_TIME, UPDATED_BY, UPDATED_TIME, EYE_TIP,
+    TIME_BEGIN,TIME_END,TIME_LENGTH,TIME_LIMIT,WORK_TIME_BEGIN,WORK_TIME_ENG,WORK_TIME_LENGTH,WORK_TIME_LIMIT
+  </sql>
+
+
+
+  <insert id="insert" parameterType="com.ssm.promotion.core.entity.Eyeprotect">
+    <!--@mbg.generated-->
+    insert into ssm_a50_db.eyeprotect (ROBOT_ID, REVISION, CREATED_BY, 
+      CREATED_TIME, UPDATED_BY, UPDATED_TIME, 
+      EYE_TIP, TIME_BEGIN, TIME_END, 
+      TIME_LENGTH, TIME_LIMIT, WORK_TIME_BEGIN, 
+      WORK_TIME_ENG, WORK_TIME_LENGTH, WORK_TIME_LIMIT
+      )
+    values (#{robotId,jdbcType=VARCHAR}, #{revision,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{eyeTip,jdbcType=INTEGER}, #{timeBegin,jdbcType=INTEGER}, #{timeEnd,jdbcType=INTEGER}, 
+      #{timeLength,jdbcType=INTEGER}, #{timeLimit,jdbcType=INTEGER}, #{workTimeBegin,jdbcType=INTEGER}, 
+      #{workTimeEng,jdbcType=INTEGER}, #{workTimeLength,jdbcType=INTEGER}, #{workTimeLimit,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.promotion.core.entity.Eyeprotect">
+    <!--@mbg.generated-->
+    insert into ssm_a50_db.eyeprotect
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="robotId != null">
+        ROBOT_ID,
+      </if>
+      <if test="revision != null">
+        REVISION,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+      <if test="updatedTime != null">
+        UPDATED_TIME,
+      </if>
+      <if test="eyeTip != null">
+        EYE_TIP,
+      </if>
+      <if test="timeBegin != null">
+        TIME_BEGIN,
+      </if>
+      <if test="timeEnd != null">
+        TIME_END,
+      </if>
+      <if test="timeLength != null">
+        TIME_LENGTH,
+      </if>
+      <if test="timeLimit != null">
+        TIME_LIMIT,
+      </if>
+      <if test="workTimeBegin != null">
+        WORK_TIME_BEGIN,
+      </if>
+      <if test="workTimeEng != null">
+        WORK_TIME_ENG,
+      </if>
+      <if test="workTimeLength != null">
+        WORK_TIME_LENGTH,
+      </if>
+      <if test="workTimeLimit != null">
+        WORK_TIME_LIMIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="robotId != null">
+        #{robotId,jdbcType=VARCHAR},
+      </if>
+      <if test="revision != null">
+        #{revision,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eyeTip != null">
+        #{eyeTip,jdbcType=INTEGER},
+      </if>
+      <if test="timeBegin != null">
+        #{timeBegin,jdbcType=INTEGER},
+      </if>
+      <if test="timeEnd != null">
+        #{timeEnd,jdbcType=INTEGER},
+      </if>
+      <if test="timeLength != null">
+        #{timeLength,jdbcType=INTEGER},
+      </if>
+      <if test="timeLimit != null">
+        #{timeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeBegin != null">
+        #{workTimeBegin,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeEng != null">
+        #{workTimeEng,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeLength != null">
+        #{workTimeLength,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeLimit != null">
+        #{workTimeLimit,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from ssm_a50_db.eyeprotect
+    where ROBOT_ID = #{robotId,jdbcType=VARCHAR}
+
+  </select>
+
+</mapper>
