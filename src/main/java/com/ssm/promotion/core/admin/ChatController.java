@@ -18,7 +18,7 @@ import java.util.Date;
 
 
 @Controller
-@RequestMapping("/device")
+@RequestMapping("/chat")
 public class ChatController extends BaseController {
 
     private static final Logger log = Logger.getLogger(ChatController.class);// 日志文件
@@ -49,7 +49,7 @@ public class ChatController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/addChatMsg", method = RequestMethod.POST)
     public Result addChatMsg(@RequestParam("deviceId") String deviceId,
-                             @RequestParam("chatTime") Date chatTime,
+                             //@RequestParam("chatTime") Date chatTime,
                              @RequestParam("chatQuestion") String chatQuestion,
                              @RequestParam("chatAnswer") String chatAnswer,
                              @RequestParam("chatType") String chatType) {

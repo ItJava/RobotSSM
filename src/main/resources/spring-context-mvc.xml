@@ -37,12 +37,24 @@
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
-                        <value>application/json; charset=UTF-8</value>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
                 <property name="prettyPrint" value="true"/>
                 <property name="objectMapper" ref="objectMapper"/>
+             <!--   <property name="gson">
+                    <bean class="org.springframework.http.converter.json.GsonFactoryBean">
+                        <property name="serializeNulls" value="true"/>
+                        <property name="disableHtmlEscaping" value="true"/>
+                        <property name="dateFormatPattern" value="yyyy-MM-dd HH:mm:ss:SSS" />
+                    </bean>
+                </property>-->
+
             </bean>
+
+
+
         </mvc:message-converters>
     </mvc:annotation-driven>
     <!-- End: 配置json消息转换器 & 参数解析 -->
