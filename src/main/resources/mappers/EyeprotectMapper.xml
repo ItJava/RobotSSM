@@ -173,7 +173,11 @@
     where ROBOT_ID = #{robotId,jdbcType=VARCHAR}
   </update>
 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from eyeprotect
+    where ROBOT_ID =#{robotId,jdbcType=VARCHAR}
 
-
+  </delete>
 
 </mapper>

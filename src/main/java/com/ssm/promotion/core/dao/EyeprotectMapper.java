@@ -13,4 +13,6 @@ public interface EyeprotectMapper {
 
      int updateByPrimaryKey(Eyeprotect record);
 
+     int deleteByPrimaryKey(String robotId);
+
 }

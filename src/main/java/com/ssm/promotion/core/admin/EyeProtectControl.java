@@ -139,6 +139,22 @@ public class EyeProtectControl extends BaseController {
 
 
 
+    @ResponseBody
+    @RequestMapping(value = "/delTimeAlarm", method = RequestMethod.POST)
+    public Result delTimeAlarm(@RequestParam("deviceId") String robotId) {
+        if (StringUtil.isEmpty(robotId)
+        )return ResultGenerator.genParamerFailResult("请求参数有误!");
+
+        Eyeprotect eyeprotect =  eyeprotectService.selectByPrimaryKey(robotId);
+        if(eyeprotect==null) return ResultGenerator.genParamerFailResult("当前未设置这个护眼时间!");
+        int delFlag =  eyeprotectService.deleteByPrimaryKey(robotId);
+        if(delFlag!=0) log.info(robotId+"：对应的护眼时间已成功删除！");
+        else log.info(robotId+"：对应的护眼时间删除失败！");
+        return ResultGenerator.genSuccessResult(new Gson().toJson(eyeprotect));
+    }
+
+
+
 
 
 

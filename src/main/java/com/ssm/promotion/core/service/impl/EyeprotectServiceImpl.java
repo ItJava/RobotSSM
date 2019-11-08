@@ -35,5 +35,10 @@ import javax.annotation.Resource;
         return eyeprotectMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public int deleteByPrimaryKey(String deviceId) {
+        return eyeprotectMapper.deleteByPrimaryKey(deviceId);
+    }
+
 }
 

@@ -10,6 +10,7 @@ public interface EyeprotectService {
 
     int updateByPrimaryKey(Eyeprotect record);
 
+    int deleteByPrimaryKey(String deviceId);
 
 }
 
