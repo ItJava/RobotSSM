@@ -5,11 +5,12 @@ import com.ssm.promotion.core.entity.Device;
 import com.ssm.promotion.core.entity.Eyeprotect;
 import com.ssm.promotion.core.service.EyeprotectService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
 @Service("eyeprotect")
-public class EyeprotectServiceImpl implements EyeprotectService {
+ public class EyeprotectServiceImpl implements EyeprotectService {
 
     @Resource
     private EyeprotectMapper eyeprotectMapper;
@@ -30,7 +31,7 @@ public class EyeprotectServiceImpl implements EyeprotectService {
     }
 
     @Override
-    public int upDateEyeprotectAlarm(Eyeprotect record) {
+    public int updateByPrimaryKey(Eyeprotect record) {
         return eyeprotectMapper.updateByPrimaryKey(record);
     }
 

@@ -133,7 +133,7 @@ public class EyeProtectControl extends BaseController {
         eyeprotect.setWorkTimeEng(workTimeEng);
         eyeprotect.setWorkTimeLength(workTimeLength);
         eyeprotect.setWorkTimeLimit(workTimeLimit);
-        int insertFlag =  eyeprotectService.upDateEyeprotectAlarm(eyeprotect);
+        int insertFlag =  eyeprotectService.updateByPrimaryKey(eyeprotect);
          return ResultGenerator.genSuccessResult(new Gson().toJson(eyeprotect));
     }
 
