@@ -282,6 +282,14 @@
         </dependency>
         <!-- End: okhttp -->
 
+        <!-- 用于生成图片的缩略图 -->
+        <!-- Start: coobird -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+        <!-- End: coobird -->
 
     </dependencies>
 
