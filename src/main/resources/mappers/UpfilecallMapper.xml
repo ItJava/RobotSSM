@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.promotion.core.dao.UpfilecallMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.promotion.core.entity.Upfilecall">
+    <!--@mbg.generated-->
+    <!--@Table ssm_a50_db.upfilecall-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="bucket" jdbcType="VARCHAR" property="bucket" />
+    <result column="fsize" jdbcType="VARCHAR" property="fsize" />
+    <result column="btype" jdbcType="VARCHAR" property="btype" />
+    <result column="bfrealname" jdbcType="VARCHAR" property="bfrealname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `key`, hash, bucket, fsize, btype, bfrealname
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from ssm_a50_db.upfilecall
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from ssm_a50_db.upfilecall
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ssm.promotion.core.entity.Upfilecall" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into ssm_a50_db.upfilecall (`key`, hash, bucket, 
+      fsize, btype, bfrealname
+      )
+    values (#{key,jdbcType=VARCHAR}, #{hash,jdbcType=VARCHAR}, #{bucket,jdbcType=VARCHAR}, 
+      #{fsize,jdbcType=VARCHAR}, #{btype,jdbcType=VARCHAR}, #{bfrealname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ssm.promotion.core.entity.Upfilecall" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into ssm_a50_db.upfilecall
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="key != null">
+        `key`,
+      </if>
+      <if test="hash != null">
+        hash,
+      </if>
+      <if test="bucket != null">
+        bucket,
+      </if>
+      <if test="fsize != null">
+        fsize,
+      </if>
+      <if test="btype != null">
+        btype,
+      </if>
+      <if test="bfrealname != null">
+        bfrealname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="key != null">
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="hash != null">
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="bucket != null">
+        #{bucket,jdbcType=VARCHAR},
+      </if>
+      <if test="fsize != null">
+        #{fsize,jdbcType=VARCHAR},
+      </if>
+      <if test="btype != null">
+        #{btype,jdbcType=VARCHAR},
+      </if>
+      <if test="bfrealname != null">
+        #{bfrealname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.promotion.core.entity.Upfilecall">
+    <!--@mbg.generated-->
+    update ssm_a50_db.upfilecall
+    <set>
+      <if test="key != null">
+        `key` = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="hash != null">
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="bucket != null">
+        bucket = #{bucket,jdbcType=VARCHAR},
+      </if>
+      <if test="fsize != null">
+        fsize = #{fsize,jdbcType=VARCHAR},
+      </if>
+      <if test="btype != null">
+        btype = #{btype,jdbcType=VARCHAR},
+      </if>
+      <if test="bfrealname != null">
+        bfrealname = #{bfrealname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.promotion.core.entity.Upfilecall">
+    <!--@mbg.generated-->
+    update ssm_a50_db.upfilecall
+    set `key` = #{key,jdbcType=VARCHAR},
+      hash = #{hash,jdbcType=VARCHAR},
+      bucket = #{bucket,jdbcType=VARCHAR},
+      fsize = #{fsize,jdbcType=VARCHAR},
+    btype = #{btype,jdbcType=VARCHAR},
+      bfrealname = #{bfrealname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByTypeFileName" parameterType="java.lang.String"  resultMap="BaseResultMap">
+
+      <!--@mbg.generated-->
+      select
+      <include refid="Base_Column_List" />
+      from ssm_a50_db.upfilecall
+      where btype = #{btype,jdbcType=VARCHAR} and
+       bfrealname = #{bfrealname,jdbcType=VARCHAR}
+
+
+    </select>
+  <select id="selectByType" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from ssm_a50_db.upfilecall
+    where btype = #{btype,jdbcType=VARCHAR}
+
+  </select>
+</mapper>
