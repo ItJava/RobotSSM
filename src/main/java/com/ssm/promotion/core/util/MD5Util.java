@@ -49,14 +49,6 @@ public class MD5Util {
     private static final char HEXIDGITS[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
 
-    /**
-     * MD5加密
-     *
-     * @param str
-     * @return
-     * @author: xiaozhenhua
-     * @data:2014-4-9 下午2:44:13
-     */
     public static String getMD5Str(String str) {
         if (str == null) {
             return null;

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.promotion.core.dao.QiniuyunAcMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.promotion.core.entity.QiniuyunAc">
+    <!--@mbg.generated-->
+    <!--@Table ssm_a50_db.qiniuyun_ac-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="AccessKey" jdbcType="VARCHAR" property="accesskey" />
+    <result column="SecretKey" jdbcType="VARCHAR" property="secretkey" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, AccessKey, SecretKey
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from ssm_a50_db.qiniuyun_ac
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from ssm_a50_db.qiniuyun_ac
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ssm.promotion.core.entity.QiniuyunAc" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into ssm_a50_db.qiniuyun_ac (AccessKey, SecretKey)
+    values (#{accesskey,jdbcType=VARCHAR}, #{secretkey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ssm.promotion.core.entity.QiniuyunAc" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into ssm_a50_db.qiniuyun_ac
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accesskey != null">
+        AccessKey,
+      </if>
+      <if test="secretkey != null">
+        SecretKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accesskey != null">
+        #{accesskey,jdbcType=VARCHAR},
+      </if>
+      <if test="secretkey != null">
+        #{secretkey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.promotion.core.entity.QiniuyunAc">
+    <!--@mbg.generated-->
+    update ssm_a50_db.qiniuyun_ac
+    <set>
+      <if test="accesskey != null">
+        AccessKey = #{accesskey,jdbcType=VARCHAR},
+      </if>
+      <if test="secretkey != null">
+        SecretKey = #{secretkey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.promotion.core.entity.QiniuyunAc">
+    <!--@mbg.generated-->
+    update ssm_a50_db.qiniuyun_ac
+    set AccessKey = #{accesskey,jdbcType=VARCHAR},
+      SecretKey = #{secretkey,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

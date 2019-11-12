@@ -274,13 +274,13 @@
         </dependency>
         <!-- End: redis -->
 
-        <!-- Start: okhttp -->
+        <!-- Start: mqttv3 -->
         <dependency>
             <groupId>org.eclipse.paho</groupId>
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
             <version>1.2.0</version>
         </dependency>
-        <!-- End: okhttp -->
+        <!-- End: mqttv3 -->
 
         <!-- 用于生成图片的缩略图 -->
         <!-- Start: coobird -->
@@ -291,6 +291,19 @@
         </dependency>
         <!-- End: coobird -->
 
+
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>happy-dns-java</artifactId>
+            <version>0.1.6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
