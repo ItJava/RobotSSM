@@ -1,44 +1,58 @@
 package com.ssm.promotion.core.util;
 
 import com.qiniu.util.Auth;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.ResourceBundle;
-
+@Configuration
 public class QiNiuYunTools {
+    @Value("#{ossProperties.thumbnailPictureFolder}")
+    private String thumbnailPictureFolder;
+    @Value("#{ossProperties.AccessKey}")
+    private String accessKey;
+    @Value("#{ossProperties.SecretKey}")
+    private String secretKey;
+    @Value("#{ossProperties.BucketName}")
+    private String bucketName;
+    @Value("#{ossProperties.QiNiuHeaderAC}")
+    private String qiNiuHeaderAC;
 
-
-    ResourceBundle resource = ResourceBundle.getBundle("config");
-    String thumbnailPictureFolder = resource.getString("QiNiuHeaderAC");
-    String accessKey = resource.getString("AccessKey");
-    String secretKey = resource.getString("SecretKey");
-    String bucketName = resource.getString("BucketName");
-
-    Auth auth;
-
-    private QiNiuYunTools(){
-        auth= Auth.create(accessKey, secretKey);
-    }
-    /**
-     *    类级的内部类，也就是静态的成员式内部类，该内部类的实例与外部类的实例
-     *    没有绑定关系，而且只有被调用到时才会装载，从而实现了延迟加载。
-     */
-    private static class QiNiuYunToolsHolder{
-        /**
-         * 静态初始化器，由JVM来保证线程安全
-         */
-        private static QiNiuYunTools instance = new QiNiuYunTools();
-    }
-
-    public static QiNiuYunTools getInstance(){
-        return QiNiuYunToolsHolder.instance;
-    }
-
+    private Auth auth;
 
     public Auth getAuth() {
+        if (auth == null) {
+            System.out.println("qiniu akey = " + accessKey);
+            System.out.println("qiniu skey = " + secretKey);
+            auth = Auth.create(accessKey, secretKey);
+        }
         return auth;
     }
 
     public void setAuth(Auth auth) {
         this.auth = auth;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
+    }
+
+    public String getThumbnailPictureFolder() {
+        return thumbnailPictureFolder;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    public String getQiNiuHeaderAC() {
+        return qiNiuHeaderAC;
     }
 }

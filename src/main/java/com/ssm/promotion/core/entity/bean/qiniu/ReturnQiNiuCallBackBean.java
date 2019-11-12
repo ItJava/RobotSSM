@@ -11,6 +11,9 @@ public class ReturnQiNiuCallBackBean implements Serializable {
   private String hash;
   private String bucket;
   private String fsize;
+  private String btype;
+  private String bfrealname;
+
 
 
     public String getKey() {
@@ -43,5 +46,21 @@ public class ReturnQiNiuCallBackBean implements Serializable {
 
     public void setFsize(String fsize) {
         this.fsize = fsize;
+    }
+
+    public String getBtype() {
+        return btype;
+    }
+
+    public void setBtype(String btype) {
+        this.btype = btype;
+    }
+
+    public String getBfrealname() {
+        return bfrealname;
+    }
+
+    public void setBfrealname(String bfrealname) {
+        this.bfrealname = bfrealname;
     }
 }
