@@ -32,6 +32,20 @@
             </bean>
         </property>
     </bean>
+
+    <!--&lt;!&ndash; 读取props&ndash;&gt;-->
+    <!--<bean id="props" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--<value>classpath:oss.config.properties</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="fileEncoding" value="UTF-8"/>-->
+    <!--</bean>-->
+    <!--<bean id="propertyConfig" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">-->
+        <!--<property name="properties" ref="props"/>-->
+    <!--</bean>-->
+
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -55,11 +69,10 @@
                     <bean class="org.springframework.http.converter.json.GsonFactoryBean">
                         <property name="serializeNulls" value="true"/>
                         <property name="disableHtmlEscaping" value="true"/>
-                        <property name="dateFormatPattern" value="yyyy-MM-dd HH:mm:ss:SSS" />
+                        <property name="dateFormatPattern" value="yyyy-MM-dd HH:mm:ss:SSS"/>
                     </bean>
                 </property>
             </bean>
-
 
 
         </mvc:message-converters>

@@ -22,11 +22,12 @@
 
 
     <!-- 加载配置文件 -->
-    <!--<context:property-placeholder location="classpath:config.properties"/>-->
+    <!--<context:property-placeholder location="classpath:oss.config.properties"/>-->
     <util:properties id="mqttProperties" location="classpath:/mqtt.properties.template"/>
+    <util:properties id="ossProperties" location="classpath:/oss.config.properties"/>
     <util:properties id="imProperties" location="classpath:/im.properties.template"/>
-    <!-- 扫描service自动注入为bean -->
-    <context:component-scan base-package="com.iot.mqtt.config com.ssm.promotion.core.config"/>
+     <!-- 扫描service自动注入为bean -->
+    <context:component-scan base-package="com.iot.mqtt.config com.ssm.promotion.core.config com.ssm.promotion.core.util"/>
 
 
 
